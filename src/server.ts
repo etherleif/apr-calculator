@@ -23,7 +23,7 @@ const startExpress = () => {
   );
 
   app.listen(config.port, () =>
-    console.log(`Farms server is listening on port ${config.port}!`)
+    console.error(`Farms server is listening on port ${config.port}!`)
   );
 };
 
