@@ -1,12 +1,12 @@
-import express, { Application } from "express";
-import compression from "compression";
-import cors from "cors";
-import { queryParser } from "express-query-parser";
-import bodyParser from "body-parser";
-import config from "./config";
-import {  startRedis } from "./redis/client";
+import express, { type Application } from 'express';
+import compression from 'compression';
+import cors from 'cors';
+import { queryParser } from 'express-query-parser';
+import bodyParser from 'body-parser';
+import config from './config';
+import { startRedis } from './redis/client';
 
-const startExpress = () => {
+const startExpress = (): void => {
   const app: Application = express();
 
   app.use(compression());
@@ -22,12 +22,14 @@ const startExpress = () => {
     })
   );
 
-  app.listen(config.port, () =>
-    console.error(`Farms server is listening on port ${config.port}!`)
-  );
+  app.listen(config.port, () => console.error(`Farms server is listening on port ${config.port}!`));
 };
 
-(async () => {
+const start = async (): Promise<void> => {
   await startRedis();
   startExpress();
+};
+
+void (async () => {
+  await start().catch((err) => console.error(err));
 })();
